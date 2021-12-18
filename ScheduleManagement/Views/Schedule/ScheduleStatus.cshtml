@@ -1,0 +1,61 @@
+﻿@model ScheduleManagement.Models.ScheduleStatusViewModel
+@{
+    ViewBag.Title = "ScheduleStatus";
+}
+
+<h4>排程狀態查詢</h4>
+
+@using (Html.BeginForm("ScheduleStatusList", "Schedule", FormMethod.Get))
+{
+    <table>
+        <tr>
+            <td>@Html.DisplayNameFor(m => m.ScheduleList) </td>
+            <td>@Html.DropDownListFor(m => m.ScheduleSno, @Model.ScheduleList)</td>
+        </tr>
+        <tr><td><input type="submit" value="查詢" /></td></tr>
+    </table>
+
+}
+
+<br />
+@if (!String.IsNullOrEmpty(Model.ServiceStatus) && Model.ServiceStatus != "" ){    
+    <span>服務名稱:@Model.ServiceName</span><br />
+    <span>服務狀態:@Model.ServiceStatus</span><br />
+}
+@if (Model.ScheduleStatus != null)
+{    
+    <form>
+        <table border="1">
+            <input type="hidden" id="ScheduleSno" value="@Model.ScheduleSno" />
+            <tr><th>工作編號</th><th>工作名稱</th><th>Cron</th><th>狀態</th><th colspan="3">操作區</th></tr>
+            @foreach (var item in Model.ScheduleStatus)
+            {
+                <tr>
+                    <td>@item.JobSno</td>
+                    <td>@item.JobName</td>
+                    <td>@item.JobCron</td>
+                    <td>@item.JobStatus</td>
+                    <td>
+                        <span></span>
+                        @Html.ActionLink("執行一次", "ExecuteJobOnce", item)                   
+                        @if (item.JobStatus == "執行中")
+                        {
+                            <span>@Html.ActionLink("中斷", "InterrupJob", item)</span>
+                        }
+                        else if (item.JobStatus == "已排程")
+                        {
+                            <span>@Html.ActionLink("暫停", "PauseJob", item)</span>
+                        }
+                        else if (item.JobStatus == "暫停")
+                        {
+                            <span>@Html.ActionLink("繼續", "ResumeJob", item)</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </table>
+    </form>
+}
+
+@Model.QueryResult
+@Model.ExecuteResult

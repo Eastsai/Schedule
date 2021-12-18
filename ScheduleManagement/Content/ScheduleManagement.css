@@ -1,0 +1,26 @@
+﻿    body,button, input,select, textarea,h1 ,h2, h3, h4, h5, h6 { 
+        font-family:Microsoft JhengHei;              
+    }
+    html,body {
+         margin: 0; padding: 0; height: 100%; border:none; 
+    }
+
+
+    
+.butlink {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  border:none;
+  outline:none;
+}
+    .butlink:hover {
+        text-decoration: underline;
+        /*border:none;
+        outline:none;*/
+    }
+    /*.butlink:active {        
+        border:none;
+        outline:none;
+    }*/
